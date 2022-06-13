@@ -17,7 +17,7 @@ class BottomNavbarItem extends StatelessWidget {
           width: 26,
         ),
         Spacer(),
-        isActive ?? false
+        isActive!
             ? Container(
                 width: 30,
                 height: 2,
