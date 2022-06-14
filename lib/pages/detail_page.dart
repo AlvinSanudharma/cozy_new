@@ -2,6 +2,7 @@ import 'package:cozy_new/widgets/facility_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cozy_new/theme.dart';
+import 'package:cozy_new/pages/error_page.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -9,7 +10,12 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     urlLauncher(url) async {
-      if (!await launchUrl(url)) throw 'Could not launch $url';
+      if (await canLaunchUrl(url)) {
+        launchUrl(url);
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ErrorPage()));
+      }
     }
 
     return Scaffold(
@@ -227,8 +233,7 @@ class DetailPage extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: (() {
-                              urlLauncher(
-                                  Uri.parse('https://www.google.co.id/'));
+                              urlLauncher(Uri.parse('https://flutter.dev/'));
                             }),
                             child: Image.asset(
                               'assets/btn_map.png',
