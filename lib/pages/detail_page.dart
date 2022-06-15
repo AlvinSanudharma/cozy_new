@@ -4,8 +4,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cozy_new/theme.dart';
 import 'package:cozy_new/pages/error_page.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  bool isClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -286,9 +293,18 @@ class DetailPage extends StatelessWidget {
                     width: 40,
                   ),
                 ),
-                Image.asset(
-                  'assets/btn_wishlist.png',
-                  width: 40,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isClicked = !isClicked;
+                    });
+                  },
+                  child: Image.asset(
+                    isClicked
+                        ? 'assets/btn_wishlist_filled.png'
+                        : 'assets/btn_wishlist.png',
+                    width: 40,
+                  ),
                 ),
               ],
             ),
