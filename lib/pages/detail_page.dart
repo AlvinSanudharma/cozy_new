@@ -29,6 +29,31 @@ class _DetailPageState extends State<DetailPage> {
       }
     }
 
+    Future<void> showConfirmation() async {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Confirmation'),
+              content: Text(
+                  'Are you sure you want to\ncontact the boarding house owner'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'No'),
+                  child: Text('No'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, 'Yes');
+                    urlLauncher(Uri.parse('tel:${widget.space.phone ?? ''}'));
+                  },
+                  child: Text('Yes'),
+                ),
+              ],
+            );
+          });
+    }
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -206,8 +231,7 @@ class _DetailPageState extends State<DetailPage> {
                         margin: EdgeInsets.symmetric(horizontal: edge),
                         child: ElevatedButton(
                           onPressed: (() {
-                            urlLauncher(
-                                Uri.parse('tel:${widget.space.phone ?? ''}'));
+                            showConfirmation();
                           }),
                           style: ElevatedButton.styleFrom(
                               primary: purpleColor,
